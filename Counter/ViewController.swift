@@ -9,11 +9,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var counterLabel: UILabel!
-    @IBOutlet weak var incrementButton: UIButton!
-    @IBOutlet weak var decrementButton: UIButton!
-    @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var historyText: UITextView!
+    @IBOutlet private weak var counterLabel: UILabel!
+    @IBOutlet private weak var incrementButton: UIButton!
+    @IBOutlet private weak var decrementButton: UIButton!
+    @IBOutlet private weak var resetButton: UIButton!
+    @IBOutlet private weak var historyText: UITextView!
     
     var counterValue: Int = 0 {
         didSet {
@@ -21,28 +21,28 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func incrementTapped() { //а тут не принято писать вот так: onIncrementPress?
+    @IBAction private func incrementTapped() {
         counterValue = max(counterValue, 0) + 1
         addToHistory("значение изменено на +1")
     }
     
-    @IBAction func decrementTapped() {
+    @IBAction private func decrementTapped() {
         counterValue -= 1
         addToHistory(counterValue < 0 ? "попытка уменьшить значение счётчика ниже 0" : "значение изменено на -1")
     }
     
-    @IBAction func resetTapped() {
+    @IBAction private func resetTapped() {
         counterValue = 0
         addToHistory("значение сброшено")
     }
     
-    func addToHistory(_ actionMessage: String) {
+    private func addToHistory(_ actionMessage: String) {
         let now = generateTimeStampString()
         historyText.text += "[\(now)]: \(actionMessage)\n"
         historyText.scrollToBottom()
     }
     
-    func generateTimeStampString() -> String {
+    private func generateTimeStampString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = DATE_FORMAT
         return dateFormatter.string(from: Date())
